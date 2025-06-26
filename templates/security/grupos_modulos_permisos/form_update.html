@@ -4,6 +4,44 @@
 {% block title %}Actualizar Permisos{% endblock %}
 
 {% block content %}
+<style>
+.permisos-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #f3f4f6;
+    border-radius: 1rem;
+    overflow: hidden;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px #0001;
+}
+.permisos-table th, .permisos-table td {
+    padding: 0.75rem 1.2rem;
+    text-align: left;
+    font-size: 1rem;
+    color: #222;
+}
+.permisos-table th {
+    background: #dbeafe;
+    font-weight: 600;
+}
+.permisos-table td {
+    background: #f9fafb;
+}
+.perm-checkbox {
+    accent-color: #2563eb;
+    width: 1.1rem;
+    height: 1.1rem;
+}
+.btn-xl-rounded {
+    border-radius: 2rem !important;
+    font-size: 1.1rem;
+    padding-left: 2.5rem !important;
+    padding-right: 2.5rem !important;
+}
+</style>
+
 <section class="min-h-screen py-12 bg-white">
     <div class="container mx-auto px-4 max-w-3xl">
         <h1 class="text-3xl font-bold text-center text-gray-900 mb-6 font-[Orbitron]">Actualizar Permisos</h1>
@@ -24,27 +62,36 @@
             </div>
 
             <div class="mb-6">
-                <label class="font-semibold text-gray-700">Permisos:</label>
-                <div class="grid grid-cols-2 gap-4 mt-2">
-                    {% for perm in combined_permissions %}
-                        <label class="inline-flex items-center gap-2">
-                            <input type="checkbox" name="permissions[]" value="{{ perm.id }}"
-                                class="perm-checkbox h-4 w-4 accent-blue-500"
-                                {% if perm.id|stringformat:"s" in selected_permissions %}
-                                    checked
-                                {% endif %}
-                            >
-                            {{ perm.name }}
-                        </label>
-                    {% endfor %}
+                <label class="font-semibold text-gray-700 mb-2 block">Permisos:</label>
+                <div class="overflow-x-auto">
+                    <table class="permisos-table">
+                        <thead>
+                            <tr>
+                                {% for perm in combined_permissions %}
+                                    <th>{{ perm.name }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                {% for perm in combined_permissions %}
+                                    <td class="text-center">
+                                        <input type="checkbox" name="permissions[]" value="{{ perm.id }}"
+                                            class="perm-checkbox"
+                                            {% if perm.id|stringformat:"s" in selected_permissions %}checked{% endif %}>
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
             <div class="flex justify-center gap-6 mt-8">
-                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-lg shadow flex items-center gap-2">
+                <button type="submit" class="btn-xl-rounded bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 shadow-lg text-center transition flex items-center justify-center gap-2">
                     <i class="fa-solid fa-save"></i> Actualizar
                 </button>
-                <a href="{{ back_url }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-lg shadow flex items-center gap-2">
+                <a href="{{ back_url }}" class="btn-xl-rounded bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 shadow-lg text-center transition flex items-center justify-center gap-2">
                     <i class="fa-solid fa-xmark"></i> Cancelar
                 </a>
             </div>
